@@ -1,0 +1,53 @@
+.text-right {
+  text-align: right;
+}
+.tit h4 {
+  color: #3452a1;
+  text-transform: capitalize;
+  font-weight: bold;
+  font-size: 30px;
+}
+p {
+  color: #909090;
+  margin-bottom: 40px;
+}
+.addBtn {
+  background: #1f3c88;
+  border: solid 2px #3452a1;
+  color: #fff;
+  border-radius: 25px;
+  padding: 5px 60px;
+  margin-top: 15px;
+}
+.addBtn:hover {
+  background: #ffff;
+  color: #3452a1;
+}
+.delete {
+  background: #ededed;
+  color: #a1a5b7;
+  width: 30px;
+  height: 30px;
+  /* padding: 5px; */
+  display: block;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 5px;
+}
+.custom-card {
+  border: 0;
+  box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 5%);
+  background: #d1dfff24;
+  border-radius: 10px;
+  padding: 30px;
+}
+.table > :not(caption) > * > * {
+  padding: 1rem 1rem;
+}
+th {
+  color: #1f3c88;
+  text-transform: capitalize;
+}
+.table > :not(:first-child) {
+  border-top: 2px solid #85a7fe;
+}
