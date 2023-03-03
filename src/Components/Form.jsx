@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useContext, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import { ExpensessContext } from "../Context/ExpensessContext";
@@ -18,30 +19,19 @@ const Form = () => {
     date: "",
     desc: "",
   });
-  // const [objName, setObjName] = useState([]);
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (checkFormInput()) {
-      // To change The ID
-      fetch(
-        "https://expenses-app-4d59b-default-rtdb.firebaseio.com/expenses.json",
-        {
-          method: "POST",
-          body: JSON.stringify(obj),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((result) => {
-          return result.json();
-        })
-        .then((response) => {
-          console.log(response);
-          setObj({ ...obj, id: response.name });
-        })
-        .catch((error) => console.error(error));
+      try {
+        const response = await axios.post(
+          "https://expenses-app-4d59b-default-rtdb.firebaseio.com/expenses.json",
+          obj
+        );
+        setObj({ ...obj, id: response.data.name });
+      } catch (error) {
+        return error;
+      }
       context.setExpenses((prevState) => {
         return [...prevState, obj];
       });

@@ -1,4 +1,5 @@
 // import "./resources/css/custom.css";
+import axios from "axios";
 import { useContext, useEffect } from "react";
 import Form from "./Components/Form";
 import LogImg from "./Components/LogoImg";
@@ -6,24 +7,24 @@ import Table from "./Components/Table";
 import { ExpensessContext } from "./Context/ExpensessContext";
 function App() {
   const context = useContext(ExpensessContext);
+
   const getData = async () => {
-    const data = await (
-      await fetch(
-        "https://expenses-app-4d59b-default-rtdb.firebaseio.com/expenses.json",
-        {
-          method: "GET",
-        }
-      )
-    ).json();
+    try {
+      const data = await axios.get(
+        "https://expenses-app-4d59b-default-rtdb.firebaseio.com/expenses.json"
+      );
 
-    const fetchedData = [];
+      const fetchedData = [];
 
-    for (let key in data) {
-      const expense = data[key];
-      expense.id = key;
-      fetchedData.push(expense);
+      for (let key in data.data) {
+        const expense = data.data[key];
+        expense.id = key;
+        fetchedData.push(expense);
+      }
+      context.setExpenses(fetchedData);
+    } catch (error) {
+      return error;
     }
-    context.setExpenses(fetchedData);
   };
   useEffect(() => {
     getData();

@@ -2,6 +2,7 @@ import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 
 import "@fortawesome/react-fontawesome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 import { useContext } from "react";
 import Swal from "sweetalert2";
 import { ExpensessContext } from "../Context/ExpensessContext";
@@ -9,7 +10,7 @@ import { ExpensessContext } from "../Context/ExpensessContext";
 const TableRow = (props) => {
   // Destrucuring
   const { element } = props;
-  console.log(element.id);
+
   const context = useContext(ExpensessContext);
 
   const onDeleteHandler = (e) => {
@@ -29,28 +30,19 @@ const TableRow = (props) => {
     });
   };
 
-  const deleteDataFromDb = (id) => {
-    fetch(
-      `https://expenses-app-4d59b-default-rtdb.firebaseio.com/expenses/${id}.json`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((response) => {
-        console.log(response);
-        const filteredArray = context.expenses.filter((expense) => {
-          return expense.id !== id;
-        });
-        context.setExpenses(filteredArray);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
-      })
-      .catch((error) => console.error(error));
+  const deleteDataFromDb = async (id) => {
+    try {
+      await axios.delete(
+        `https://expenses-app-4d59b-default-rtdb.firebaseio.com/expenses/${id}.json`
+      );
+      const filteredArray = context.expenses.filter((expense) => {
+        return expense.id !== id;
+      });
+      context.setExpenses(filteredArray);
+      Swal.fire("Deleted!", "Your file has been deleted.", "success");
+    } catch (error) {
+      return error;
+    }
   };
   return (
     <tr>
