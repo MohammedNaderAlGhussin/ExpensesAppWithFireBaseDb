@@ -1,11 +1,10 @@
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-
-import "@fortawesome/react-fontawesome";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import { useContext } from "react";
-import Swal from "sweetalert2";
 import { ExpensessContext } from "../Context/ExpensessContext";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "@fortawesome/react-fontawesome";
 
 const TableRow = (props) => {
   // Destrucuring

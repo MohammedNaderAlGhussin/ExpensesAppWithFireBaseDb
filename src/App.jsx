@@ -1,10 +1,10 @@
-// import "./resources/css/custom.css";
-import axios from "axios";
 import { useContext, useEffect } from "react";
 import Form from "./Components/Form";
-import LogImg from "./Components/LogoImg";
 import Table from "./Components/Table";
 import { ExpensessContext } from "./Context/ExpensessContext";
+import Logo from "./resources/images/m1.png";
+import axios from "axios";
+
 function App() {
   const context = useContext(ExpensessContext);
 
