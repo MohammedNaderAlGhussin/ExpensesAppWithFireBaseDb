@@ -22,7 +22,18 @@ const Form = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    if (checkFormInput()) {
+    
+    if (isFormDisabled()) {
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Make Sure To Fill The Form",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+
+    // Add your checks first, so that the left is the happy path
       try {
         const response = await axios.post(
           "https://expenses-app-4d59b-default-rtdb.firebaseio.com/expenses.json",
@@ -32,37 +43,27 @@ const Form = () => {
       } catch (error) {
         return error;
       }
+
       context.setExpenses((prevState) => {
         return [...prevState, obj];
       });
+
       clearForm();
+
       Swal.fire({
         icon: "success",
         title: "Added Successfully",
         showConfirmButton: false,
         timer: 1500,
       });
-    }
   };
 
-  const checkFormInput = () => {
-    if (
-      titleRef.current.value !== "" &&
-      valueRef.current.value !== "" &&
-      dateRef.current.value !== "" &&
-      descRef.current.value !== ""
-    ) {
-      return true;
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Make Sure To Fill The Form",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-  };
+  const isFormDisabled = () => (
+      titleRef.current.value === "" ||
+      valueRef.current.value === "" ||
+      dateRef.current.value === "" ||
+      descRef.current.value === ""
+    );
 
   const clearForm = () => {
     titleRef.current.value = "";
@@ -70,6 +71,7 @@ const Form = () => {
     dateRef.current.value = "";
     descRef.current.value = "";
   };
+  
   return (
     <div className="col-sm-6 mt-5">
       <div className="row tit">
@@ -134,4 +136,5 @@ const Form = () => {
     </div>
   );
 };
+
 export default Form;
