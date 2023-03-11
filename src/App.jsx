@@ -34,7 +34,7 @@ function App() {
     <div className="container mt-5">
       <div className="row">
         <div className="col-sm-6">
-          <LogImg />
+        <img src={Logo} alt="" className="img-fluid" />
         </div>
         <Form />
       </div>
