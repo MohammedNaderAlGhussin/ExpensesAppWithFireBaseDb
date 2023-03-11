@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
 import Form from "./Components/Form";
-import Table from "./Components/Table";
 import { ExpensessContext } from "./Context/ExpensessContext";
 import Logo from "./resources/images/m1.png";
 import axios from "axios";
+import TableRow from "./Components/TableRow";
 
 function App() {
   const context = useContext(ExpensessContext);
@@ -26,10 +26,12 @@ function App() {
       return error;
     }
   };
+
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div className="container mt-5">
       <div className="row">
@@ -41,7 +43,23 @@ function App() {
 
       <div className="row mt-5 mb-5">
         <div className="custom-card ">
-          <Table />
+          <table className="table ">
+            <thead>
+              <tr>
+                <th> Title</th>
+                <th> Date</th>
+                <th>value</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="addRow"></tr>
+              {context.expenses.map((element) => {
+                return <TableRow key={element.id} element={element} />;
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
